@@ -2,49 +2,206 @@
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <title>SMARTWORK – บันทึกข้อความ</title>
+    <title>บันทึกข้อความ – SMARTWORK</title>
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
+
     <style>
+      @page {
+        size: A4;
+        margin: 2.2cm 2.2cm 2cm 2.2cm;
+      }
       body {
-        font-family: "Sarabun", sans-serif;
-        padding: 35px;
-        line-height: 1.7;
-        font-size: 20px;
+        font-family: "TH Sarabun New", "Sarabun", sans-serif;
+        font-size: 16pt;
+        color: #000;
+        line-height: 1.45;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      header img {
+        height: 2.4cm;
+        margin-right: 15px;
+      }
+      header h1 {
+        flex: 1;
+        text-align: center;
+        font-size: 22pt;
+        margin: 0;
+        font-weight: 700;
+      }
+      hr {
+        border: 0;
+        border-top: 2px solid #000;
+        margin: 10px 0;
+      }
+      p {
+        margin: 4px 0;
+      }
+      .indent {
+        text-indent: 2.5em;
+      }
+      .sig-block {
+        margin-top: 30px;
+        text-align: center;
+      }
+      .sample-img-row {
+        display: flex;
+        gap: 10px;
+        margin: 18px 0;
+      }
+      .sample-img-row img {
+        width: 48%;
+        height: 180px;
+        object-fit: cover;
+        border: 1px solid #aaa;
+      }
+      #printBtn {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        background: #122058;
+        color: #fff;
+        padding: 6px 15px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14pt;
+        cursor: pointer;
+      }
+      @media print {
+        #printBtn {
+          display: none;
+        }
       }
     </style>
   </head>
+
   <body>
-    <h2 style="text-align: center">บันทึกข้อความ (SMARTWORK)</h2>
-    <div id="content"></div>
+    <button id="printBtn" onclick="window.print()">พิมพ์รายงาน</button>
+
+    <header>
+      <img src="ตราครุฑ-PNG0.webp" alt="ตราครุฑ" />
+      <h1>บันทึกข้อความ</h1>
+    </header>
+
+    <p><strong>ส่วนราชการ:</strong> <span id="unit"></span></p>
+    <p>
+      <strong>ที่:</strong> <span id="code"></span>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <strong>วันที่:</strong>
+      <span id="reportDate"></span>
+    </p>
+    <p><strong>เรื่อง:</strong> รายงานผลการดำเนินงาน</p>
+    <p>
+      <strong>เรียน:</strong> ผู้อำนวยการศูนย์ส่งเสริมการเรียนรู้ระดับอำเภอ<span
+        id="district"
+      ></span>
+    </p>
+
+    <hr />
+
+    <p class="indent" id="p1"></p>
+    <p class="indent">จึงเรียนมาเพื่อโปรดทราบ</p>
+
+    <!-- รูปตัวอย่าง -->
+    <div id="imgRow" class="sample-img-row"></div>
+
+    <!-- ลายเซ็นครูผู้รายงาน -->
+    <div class="sig-block">
+      <div style="height: 60px"></div>
+      <div><strong id="fullname"></strong></div>
+      <div id="position"></div>
+    </div>
+
+    <!-- ลายเซ็นผอ.อำเภอ -->
+    <div class="sig-block">
+      <div><strong>ความเห็นของผู้อำนวยการสถานศึกษา</strong></div>
+      <div style="height: 60px"></div>
+      <div>(<span id="directorName"></span>)</div>
+      <div id="directorPos"></div>
+    </div>
+
+    <!-- ลายเซ็น ผอ.จังหวัด -->
+    <div class="sig-block">
+      <div style="height: 60px"></div>
+      <div>(นางพัชรี คงชนะ)</div>
+      <div>ผู้อำนวยการสำนักงานส่งเสริมการเรียนรู้ประจำจังหวัดศรีสะเกษ</div>
+    </div>
 
     <script>
-      const cfg = JSON.parse(localStorage.getItem("SMARTWORK_CONFIG") || "{}");
-      const data = JSON.parse(
-        localStorage.getItem("LATEST_REPORT_DATA") || "{}"
-      );
+      /* ---------- โหลด CONFIG ---------- */
+      const cfgText = localStorage.getItem("SMARTWORK_CONFIG");
+      if (!cfgText) {
+        alert("ยังไม่ได้ตั้งค่าระบบ กรุณาตั้งค่าที่ config.html");
+        location.href = "config.html";
+      }
+      const cfg = JSON.parse(cfgText);
 
-      document.getElementById("content").innerHTML = `
-    <p><b>ส่วนราชการ:</b> สำนักงาน สกร.ประจำจังหวัดศรีสะเกษ</p>
-    <p><b>ที่:</b> ศธ 07085/${cfg.district || ""}</p>
-    <p><b>เรื่อง:</b> รายงานผลการปฏิบัติงาน</p>
-    <br>
+      document.getElementById("fullname").textContent = cfg.fullname;
+      document.getElementById("position").textContent = cfg.position;
+      document.getElementById("district").textContent = cfg.district;
+      document.getElementById("unit").textContent =
+        "สกร.อ." + cfg.district + " สำนักงาน สกร.ประจำจังหวัดศรีสะเกษ";
 
-    <p>เรียน ${cfg.provinceDirectorName || "(ยังไม่ตั้งค่า)"}</p>
+      /* ---------- รหัสหนังสือ ศธ 07085.xx ---------- */
+      document.getElementById("code").textContent = cfg.code;
 
-    <p>${cfg.fullname} ตำแหน่ง ${cfg.position}
-       สังกัด สกร.อ.${cfg.district} ขอรายงานผลการดำเนินงาน ดังนี้</p>
+      /* ---------- วันที่ ---------- */
+      const thaiMonths = [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ];
+      const d = new Date();
+      const dateText =
+        d.getDate() +
+        " " +
+        thaiMonths[d.getMonth()] +
+        " " +
+        (d.getFullYear() + 543);
+      document.getElementById("reportDate").textContent = dateText;
 
-    <p><b>วันที่ดำเนินงาน :</b> ${data.workDate || "-"}</p>
-    <p><b>ชื่องาน :</b> ${data.title || "-"}</p>
-    <p><b>รายละเอียด :</b><br>${data.detail || "-"}</p>
+      /* ---------- ย่อหน้าแรก ---------- */
+      let detail = localStorage.getItem("LATEST_DETAIL") || "";
+      let title = localStorage.getItem("LATEST_TITLE") || "";
+      let workDate = localStorage.getItem("LATEST_WORKDATE") || "";
 
-    <br><br>
-    <p style="text-align:right;">ลงชื่อ .....................................................</p>
-    <p style="text-align:right;">(${cfg.fullname})</p>
-  `;
+      document.getElementById("p1").innerHTML =
+        `ด้วยข้าพเจ้า <strong>${cfg.fullname}</strong> ตำแหน่ง <strong>${cfg.position}</strong> ` +
+        `ได้ดำเนินงานตามภารกิจของหน่วยงาน ในวันที่ <strong>${workDate}</strong> ` +
+        `เรื่อง <strong>${title}</strong> รายละเอียดดังนี้ — ${detail}`;
+
+      /* ---------- รูปประกอบ (2 รูปแรก) ---------- */
+      const imgRow = document.getElementById("imgRow");
+      const picsText = localStorage.getItem("LATEST_PICS");
+      if (picsText) {
+        const arr = JSON.parse(picsText);
+        imgRow.innerHTML = "";
+        arr.forEach((url) => {
+          let img = document.createElement("img");
+          img.src = url;
+          imgRow.appendChild(img);
+        });
+      }
+
+      /* ---------- ผอ.อำเภอ ---------- */
+      document.getElementById("directorName").textContent = cfg.directorName;
+      document.getElementById("directorPos").textContent = cfg.directorPos;
     </script>
   </body>
 </html>

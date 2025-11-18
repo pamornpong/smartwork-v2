@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>SMARTWORK – ตั้งค่าระบบ</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap"
       rel="stylesheet"
@@ -11,17 +12,23 @@
 
     <style>
       body {
-        font-family: "Sarabun", sans-serif;
-        background: #f3f3f3;
-        padding: 20px;
+        font-family: "TH Sarabun New", "Sarabun", sans-serif;
+        background: #f0f2f5;
+        margin: 0;
+        padding: 15px;
       }
       .container {
         max-width: 600px;
         margin: auto;
         background: #fff;
-        padding: 25px;
         border-radius: 12px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 22px 28px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      h2 {
+        text-align: center;
+        font-size: 28px;
+        margin-top: 0;
       }
       label {
         font-size: 18px;
@@ -31,10 +38,10 @@
       select {
         width: 100%;
         padding: 10px;
+        margin: 5px 0 12px 0;
         font-size: 18px;
         border-radius: 8px;
         border: 1px solid #bbb;
-        margin-bottom: 15px;
       }
       button {
         width: 100%;
@@ -43,34 +50,52 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        margin-top: 10px;
+      }
+      #saveBtn {
+        background: #1e4bb8;
         color: #fff;
-        background: #0a4bd6;
+      }
+      #resetBtn {
+        background: #b30000;
+        color: #fff;
       }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <h2 style="text-align: center">ตั้งค่าระบบ SMARTWORK</h2>
+      <h2>ตั้งค่าระบบ (SMARTWORK)</h2>
 
-      <label>ชื่อ – สกุล (ผู้บันทึก)</label>
-      <input id="fullname" />
+      <label>ชื่อ - สกุล (ผู้บันทึก)</label>
+      <input id="fullname" placeholder="เช่น นายภมรพงศ์ ศักดาวัฒนไพศาล" />
 
       <label>ตำแหน่ง</label>
-      <input id="position" placeholder="เช่น ครู ศกร./ครู/นักวิชาการ" />
+      <select id="position">
+        <option value="">— เลือกตำแหน่ง —</option>
+        <option value="ครู ศกร.">ครู ศกร.</option>
+        <option value="นักเทคโนโลยีสารสนเทศ">นักเทคโนโลยีสารสนเทศ</option>
+        <option value="นักจัดการงานทั่วไป">นักจัดการงานทั่วไป</option>
+        <option value="นักวิชาการเงินและบัญชี">นักวิชาการเงินและบัญชี</option>
+        <option value="นักวิเคราะห์นโยบายและแผน">
+          นักวิเคราะห์นโยบายและแผน
+        </option>
+        <option value="นักวิชาการพัสดุ">นักวิชาการพัสดุ</option>
+        <option value="บรรณารักษ์">บรรณารักษ์</option>
+      </select>
 
-      <label>สังกัดอำเภอ</label>
+      <label>เลือกอำเภอ (สังกัด)</label>
       <select id="district">
         <option value="">— เลือกอำเภอ —</option>
         <option>เมืองศรีสะเกษ</option>
-        <option>กันทรลักษ์</option>
-        <option>กันทรารมย์</option>
-        <option>ยางชุมน้อย</option>
         <option>ห้วยทับทัน</option>
+        <option>ยางชุมน้อย</option>
+        <option>กันทรารมย์</option>
+        <option>กันทรลักษ์</option>
         <option>ขุขันธ์</option>
-        <option>ขุนหาญ</option>
         <option>ไพรบึง</option>
         <option>ปรางค์กู่</option>
+        <option>ขุนหาญ</option>
         <option>ราษีไศล</option>
         <option>อุทุมพรพิสัย</option>
         <option>ศรีรัตนะ</option>
@@ -82,42 +107,128 @@
         <option>โพธิ์ศรีสุวรรณ</option>
         <option>โนนคูณ</option>
         <option>ศิลาลาด</option>
+        <option>เมืองจันทร์</option>
+        <option>บึงบูรพ์</option>
       </select>
 
-      <hr />
+      <label>เลขที่ ศธ. (Auto)</label>
+      <input id="code" disabled />
 
-      <label>ชื่อ ผอ.จังหวัด (ผู้ลงนาม)</label>
-      <input id="pd_name" placeholder="เช่น นายณัฐพงษ์ ทองหล่อ" />
+      <label>ชื่อผู้อำนวยการอำเภอ (Auto)</label>
+      <input id="director" disabled />
 
-      <label>ตำแหน่ง ผอ.จังหวัด</label>
-      <input
-        id="pd_pos"
-        placeholder="ผู้อำนวยการสำนักงาน สกร.ประจำจังหวัดศรีสะเกษ"
-      />
+      <label>ผู้อำนวยการจังหวัด</label>
+      <input id="provDirector" value="นายณัฐพงษ์ ทองหล่อ" />
 
-      <button id="saveBtn">บันทึกข้อมูล</button>
+      <button id="saveBtn">บันทึกการตั้งค่า</button>
+      <button id="resetBtn">รีเซทระบบ (ต้องใช้ PIN)</button>
     </div>
 
     <script>
-      document.getElementById("saveBtn").onclick = () => {
-        const data = {
-          fullname: fullname.value.trim(),
-          position: position.value.trim(),
-          district: district.value.trim(),
-          provinceDirectorName: pd_name.value.trim(),
-          provinceDirectorPosition: pd_pos.value.trim(),
-        };
+      /* -------- DATA: อำเภอ → ศธ + ผอ. -------- */
 
-        if (!data.fullname || !data.position || !data.district) {
-          Swal.fire("กรอกข้อมูลให้ครบ", "", "warning");
+      const amphurData = {
+        เมืองศรีสะเกษ: {
+          code: "07085.01",
+          director: "นายวีระพันธ์ อินทรพันธุ์",
+        },
+        ห้วยทับทัน: { code: "07085.02", director: "นายปัญญา นาคทอง" },
+        ยางชุมน้อย: { code: "07085.03", director: "นางจีระพร เสาเวียง" },
+        กันทรารมย์: { code: "07085.04", director: "นางสาวลีลาวดี สีหบัณฑ์" },
+        กันทรลักษ์: { code: "07085.05", director: "นางวาสนา ชารีวัน" },
+        ขุขันธ์: { code: "07085.06", director: "นางบัวทอง บุญสน" },
+        ไพรบึง: { code: "07085.07", director: "นางสาวศรีสุดา สุภี" },
+        ปรางค์กู่: { code: "07085.08", director: "นางจันทร์ฉาย ทันตา" },
+        ขุนหาญ: { code: "07085.09", director: "นางสาวภัสด์หทัย โพธิ์ทอง" },
+        ราษีไศล: { code: "07085.10", director: "นายเทวัญ จันทเขต" },
+        อุทุมพรพิสัย: { code: "07085.11", director: "นางณัฏฐณิชา รักษาพันธ์" },
+        ศรีรัตนะ: { code: "07085.12", director: "นางพัชรีวรรณ สีมาขันธ์" },
+        น้ำเกลี้ยง: { code: "07085.13", director: "นางดวงพร เดชวิเศษ" },
+        วังหิน: { code: "07085.14", director: "นางสาวพันธิภา ประวาสุข" },
+        ภูสิงห์: { code: "07085.15", director: "นางสาวประภาพร สุพรรณ์" },
+        เบญจลักษ์: { code: "07085.16", director: "นายวราวุธ ศักดิ์เทวิน" },
+        พยุห์: { code: "07085.17", director: "นางสุพักตร์ หนองม่วง" },
+        โพธิ์ศรีสุวรรณ: { code: "07085.18", director: "นางสาวกุลธิดา ต้นโสภา" },
+        โนนคูณ: {
+          code: "07085.19",
+          director: "นายพรอาทิตย์ รักษาสิน (รักษาการ)",
+        },
+        ศิลาลาด: { code: "07085.20", director: "นางสาวอภิญญา ภูมีศรี" },
+        เมืองจันทร์: { code: "07085.21", director: "นายอุดมศักดิ์ ศิริบุตร" },
+        บึงบูรพ์: { code: "07085.22", director: "นายปิลันธน์ สระแก้ว" },
+      };
+
+      /* -------- Auto fill เมื่อเลือกอำเภอ -------- */
+      document.getElementById("district").addEventListener("change", () => {
+        const d = district.value;
+        if (amphurData[d]) {
+          code.value = amphurData[d].code;
+          director.value = amphurData[d].director;
+        } else {
+          code.value = "";
+          director.value = "";
+        }
+      });
+
+      /* -------- โหลด config ถ้ามีอยู่แล้ว -------- */
+      (function loadConfig() {
+        const cfgTxt = localStorage.getItem("SMARTWORK_CONFIG");
+        if (!cfgTxt) return;
+        const cfg = JSON.parse(cfgTxt);
+
+        fullname.value = cfg.fullname || "";
+        position.value = cfg.position || "";
+        district.value = cfg.district || "";
+        provDirector.value = cfg.provDirector || "นางสาวนฤมล บุตรดี";
+
+        if (cfg.district && amphurData[cfg.district]) {
+          code.value = amphurData[cfg.district].code;
+          director.value = amphurData[cfg.district].director;
+        }
+      })();
+
+      /* -------- บันทึกการตั้งค่า -------- */
+
+      document.getElementById("saveBtn").onclick = () => {
+        if (!fullname.value || !position.value || !district.value) {
+          Swal.fire("ข้อมูลไม่ครบ", "กรุณากรอกข้อมูลให้ครบถ้วน", "warning");
           return;
         }
+
+        const data = {
+          fullname: fullname.value.trim(),
+          position: position.value,
+          district: district.value,
+          code: code.value,
+          director: director.value,
+          provDirector: provDirector.value.trim(),
+        };
 
         localStorage.setItem("SMARTWORK_CONFIG", JSON.stringify(data));
 
         Swal.fire("บันทึกสำเร็จ", "", "success").then(() => {
           location.href = "form.html";
         });
+      };
+
+      /* -------- reset ด้วย PIN -------- */
+      document.getElementById("resetBtn").onclick = async () => {
+        const { value: pin } = await Swal.fire({
+          title: "กรอกรหัส PIN",
+          input: "password",
+          inputPlaceholder: "ป้อน PIN",
+          showCancelButton: true,
+        });
+
+        if (!pin) return;
+
+        if (pin !== "212224236248") {
+          Swal.fire("PIN ไม่ถูกต้อง", "", "error");
+          return;
+        }
+
+        localStorage.removeItem("SMARTWORK_CONFIG");
+        Swal.fire("รีเซทสำเร็จ", "", "success").then(() => location.reload());
       };
     </script>
   </body>
