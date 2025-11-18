@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SMARTWORK – ตั้งค่าระบบ</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      body {
+        font-family: "Sarabun", sans-serif;
+        background: #f3f3f3;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: 1px solid #bbb;
+        margin-bottom: 15px;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        font-size: 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        background: #0a4bd6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 style="text-align: center">ตั้งค่าระบบ SMARTWORK</h2>
+
+      <label>ชื่อ – สกุล (ผู้บันทึก)</label>
+      <input id="fullname" />
+
+      <label>ตำแหน่ง</label>
+      <input id="position" placeholder="เช่น ครู ศกร./ครู/นักวิชาการ" />
+
+      <label>สังกัดอำเภอ</label>
+      <select id="district">
+        <option value="">— เลือกอำเภอ —</option>
+        <option>เมืองศรีสะเกษ</option>
+        <option>กันทรลักษ์</option>
+        <option>กันทรารมย์</option>
+        <option>ยางชุมน้อย</option>
+        <option>ห้วยทับทัน</option>
+        <option>ขุขันธ์</option>
+        <option>ขุนหาญ</option>
+        <option>ไพรบึง</option>
+        <option>ปรางค์กู่</option>
+        <option>ราษีไศล</option>
+        <option>อุทุมพรพิสัย</option>
+        <option>ศรีรัตนะ</option>
+        <option>น้ำเกลี้ยง</option>
+        <option>วังหิน</option>
+        <option>ภูสิงห์</option>
+        <option>เบญจลักษ์</option>
+        <option>พยุห์</option>
+        <option>โพธิ์ศรีสุวรรณ</option>
+        <option>โนนคูณ</option>
+        <option>ศิลาลาด</option>
+      </select>
+
+      <hr />
+
+      <label>ชื่อ ผอ.จังหวัด (ผู้ลงนาม)</label>
+      <input id="pd_name" placeholder="เช่น นายณัฐพงษ์ ทองหล่อ" />
+
+      <label>ตำแหน่ง ผอ.จังหวัด</label>
+      <input
+        id="pd_pos"
+        placeholder="ผู้อำนวยการสำนักงาน สกร.ประจำจังหวัดศรีสะเกษ"
+      />
+
+      <button id="saveBtn">บันทึกข้อมูล</button>
+    </div>
+
+    <script>
+      document.getElementById("saveBtn").onclick = () => {
+        const data = {
+          fullname: fullname.value.trim(),
+          position: position.value.trim(),
+          district: district.value.trim(),
+          provinceDirectorName: pd_name.value.trim(),
+          provinceDirectorPosition: pd_pos.value.trim(),
+        };
+
+        if (!data.fullname || !data.position || !data.district) {
+          Swal.fire("กรอกข้อมูลให้ครบ", "", "warning");
+          return;
+        }
+
+        localStorage.setItem("SMARTWORK_CONFIG", JSON.stringify(data));
+
+        Swal.fire("บันทึกสำเร็จ", "", "success").then(() => {
+          location.href = "form.html";
+        });
+      };
+    </script>
+  </body>
+</html>
